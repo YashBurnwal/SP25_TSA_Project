@@ -156,7 +156,7 @@ if st.session_state.models_trained:
 
     st.dataframe(metrics_df.set_index("Model"))
 
-    if st.button("📊 Show Forecast"):
+    if st.button("📊 Show Forecast Vs Actual"):
         forecast = models_output[selected_model][0][:forecast_days]
         actual = future_data['Close'].values[:forecast_days]
         forecast_dates = future_data.index[:forecast_days]
@@ -184,7 +184,7 @@ if st.session_state.models_trained:
         st.pyplot(fig)
         
     # === PREDICT FROM TODAY BUTTON ===
-    if st.button("🔮 Predict Future from Today"):
+    if st.button("🔮 Predict Stock Prices"):
         today = pd.Timestamp.today().date()
         hist_start = "2023-01-01"
         hist_data = yf.download(ticker, start=hist_start, end=today)
