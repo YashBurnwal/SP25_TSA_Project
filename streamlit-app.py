@@ -11,7 +11,7 @@ import time
 from tensorflow.keras.layers import LSTM, Dense
 from sklearn.metrics import mean_absolute_error, mean_squared_error
 
-# ✅ Metric evaluator
+# Metric evaluator
 def evaluate_metrics(actual, predicted):
     mae = mean_absolute_error(actual, predicted)
     rmse = np.sqrt(mean_squared_error(actual, predicted))
@@ -54,7 +54,7 @@ if st.button("✅ Load Data"):
         st.session_state.data = data
         st.session_state.future_data = future_data
         st.session_state.data_loaded = True
-        time.sleep(5)
+        time.sleep(2)
         st.success("Data loaded successfully.")
     else:
         st.error("Failed to load data.")
@@ -81,7 +81,7 @@ if st.session_state.data_loaded:
         results['SARIMA'] = (sarima_pred.values,
                              *evaluate_metrics(actual_sarima, sarima_pred.values))
         progress.progress(33)
-        time.sleep(10)
+        time.sleep(1)
         # Train Holt-Winters
         status.text("Training: Holt-Winters...")
         es_model = ExponentialSmoothing(close, trend='add', seasonal='add', seasonal_periods=30).fit()
@@ -90,7 +90,7 @@ if st.session_state.data_loaded:
         results['Holt-Winters'] = (es_pred.values,
                                    *evaluate_metrics(actual_es, es_pred.values))
         progress.progress(66)
-        time.sleep(10)
+        time.sleep(1)
         # Train LSTM
         status.text("Training: LSTM...")
         scaler = MinMaxScaler()
@@ -125,7 +125,7 @@ if st.session_state.data_loaded:
         results['LSTM'] = (fut_preds_inv, *evaluate_metrics(actual_vals, pred_vals))
 
         progress.progress(100)
-        time.sleep(5)
+        time.sleep(1)
         status.text("✅ Training Complete.")
         st.session_state.models_output = results
         st.session_state.models_trained = True
